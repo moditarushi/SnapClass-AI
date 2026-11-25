@@ -63,11 +63,10 @@ def student_dashboard():
 
         stats = stats_map.get(sid, {"total": 0, "attended": 0})
 
-        def unenroll_button():
-            if st.button("Unenroll from this course", type='tertiary', width='stretch', icon=':material/delete_forever:'):
-                unenroll_student_to_subject(student_id, sid)
-                st.toast(f'Unenrolled from {sub['name']} successfully!')
-                st.rerun()
+        def unenroll_button(sid=sid, subject_name=sub['name']):
+            unenroll_student_to_subject(student_id, sid)
+            st.toast(f"Unenrolled from {subject_name}")
+            st.rerun()
 
         with cols[i % 2]:
 
@@ -79,7 +78,8 @@ def student_dashboard():
                     ('📅', 'Total', stats['total']),
                     ('✅', 'Attended', stats['attended']),
                 ],
-                footer_callback=unenroll_button
+                footer_callback=unenroll_button,
+                subject_id=sid
             )
     footer_dashboard()
 
@@ -109,6 +109,7 @@ def student_screen():
     photo_source = st.camera_input("Position your face in the center")
 
     if photo_source:
+
         img = np.array(Image.open(photo_source))
 
         with st.spinner('AI is scanning..'):
@@ -128,7 +129,7 @@ def student_screen():
                         st.session_state.is_logged_in = True
                         st.session_state.user_role = 'student'
                         st.session_state.student_data = student
-                        st.toast(f'Welcome Back {student['name']}')
+                        st.toast(f"Welcome Back {student['name']}")
                         time.sleep(1)
                         st.rerun()
                 else:
@@ -178,3 +179,4 @@ def student_screen():
                     st.warning('Please enter your name!')
 
     footer_dashboard()
+

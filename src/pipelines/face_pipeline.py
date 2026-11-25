@@ -78,27 +78,31 @@ def predict_attendance(class_image_np):
 
     model_data = get_trained_model()
 
-    if not model_data:
+    if not model_data or not model_data['X']:
         return detected_student, [], len(encodings)
 
-    clf = model_data['clf']
     X_train = model_data['X']
     y_train = model_data['y']
 
-    all_students = sorted(list(set(y_train)))
+    all_students = sorted(set(y_train))
+
+    # Distance threshold: start with 0.45 and validate using real images
+    resemblance_threshold = 0.45
 
     for encoding in encodings:
-        if len(all_students) >= 2:
-            predicted_id = int(clf.predict([encoding])[0])
-        else:
-            predicted_id = int(all_students[0])
 
-        student_embedding = X_train[y_train.index(predicted_id)]
+        distances = [
+            np.linalg.norm(known_embedding - encoding)
+            for known_embedding in X_train
+        ]
 
-        best_match_score = np.linalg.norm(student_embedding - encoding)
+        best_index = int(np.argmin(distances))
+        best_distance = distances[best_index]
 
-        resemblance_threshold = 0.6
+        predicted_id = int(y_train[best_index])
 
-        if best_match_score <= resemblance_threshold:
+        # Accept only if the face is sufficiently similar
+        if best_distance <= resemblance_threshold:
             detected_student[predicted_id] = True
+
     return detected_student, all_students, len(encodings)

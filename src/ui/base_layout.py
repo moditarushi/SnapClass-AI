@@ -55,7 +55,7 @@ def style_base_layout():
             h1 {
                 font-family: 'Climate Crisis', sans-serif !important;
                 font-size: 3.5rem !important;
-                line-height:1.1 1important;
+                line-height:1.1 important;
                 margin-bottom:0rem !important;
             }
 
@@ -65,6 +65,10 @@ def style_base_layout():
                 font-size: 2rem !important;
                 line-height:0.9 !important;
                 margin-bottom:0rem !important;
+            }
+
+            h1, h2 {
+                    color: #000000 !important;
             }
 
             h3, h4, p {
@@ -101,6 +105,77 @@ def style_base_layout():
 
             button:hover{
                 transform :scale(1.05)}
+
+            .stApp h1,
+            .stApp h2,
+            .stApp h3,
+            .stApp h4,
+            .stApp h5,
+            .stApp h6,
+            .stApp p,
+            .stApp label,
+            .stApp [data-testid="stWidgetLabel"] {
+                color: #111111 !important;
+            }
+
+            .stApp [data-testid="stMarkdownContainer"] p,
+            .stApp [data-testid="stMarkdownContainer"] li {
+                color: #111111 !important;
+            }
+
+            /* Fix text visibility on all buttons */
+            .stApp button {
+                color: #FFFFFF !important;
+            }
+
+            /* Primary buttons */
+            .stApp button[kind="primary"] {
+                background-color: #5865F2 !important;
+                color: #FFFFFF !important;
+            }
+
+            /* Secondary buttons */
+            .stApp button[kind="secondary"] {
+                background-color: #EB459E !important;
+                color: #FFFFFF !important;
+            }
+
+            /* Unenroll / other dark buttons */
+            .stApp button[kind="tertiary"] {
+                background-color: #111111 !important;
+                color: #FFFFFF !important;
+            }
+
+            /* FIX: Make text visible inside all Streamlit buttons */
+            .stApp button [data-testid="stMarkdownContainer"] p {
+                color: #FFFFFF !important;
+                font-family: 'Outfit', sans-serif !important;
+            }
+
+            /* Keep button labels visible */
+            .stApp button span,
+            .stApp button div {
+                color: #FFFFFF !important;
+            }
+
+            /* Inactive navigation buttons */
+            .stApp button[kind="tertiary"] {
+                background-color: #111111 !important;
+                color: #FFFFFF !important;
+            }
+
+            /* Active navigation buttons */
+            .stApp button[kind="primary"] {
+                background-color: #5865F2 !important;
+                color: #FFFFFF !important;
+            }
+
+            /* Pink secondary buttons */
+            .stApp button[kind="secondary"] {
+                background-color: #EB459E !important;
+                color: #FFFFFF !important;
+            }
+
         </style>
 
                 """, unsafe_allow_html=True)
